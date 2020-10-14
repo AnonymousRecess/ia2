@@ -9,7 +9,7 @@ public class NodeStmtRd extends NodeStmt {
     public double eval(Environment env)
     {
         scan = new Scanner(System.in);
-        return scan.nextDouble();
+        return env.put(id,scan.nextDouble()); // maybe?
 
     }
 }
