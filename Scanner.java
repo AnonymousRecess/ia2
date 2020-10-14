@@ -98,6 +98,8 @@ public class Scanner {
 		s.add("else");
 		s.add("while");
 		s.add("begin");
+		s.add("rd");
+		s.add("wr");
 	}
 
 	private void initComments(Set < String > s) {

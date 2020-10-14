@@ -72,11 +72,9 @@ public class Parser {
 		if (curr().equals(new Token("-"))) { // unary minus check
 			// 
 			match("-");
-			// Token unOp = curr();
 			NodeFact facts = parseFact();
-			// return new NodeUnaryMin(pos() , unOp.lex());
 			return new NodeUnaryMin(facts);
-			
+
 		}
 		if (curr().equals(new Token("("))) { // checks if current token is equal to (
 			match("("); // moves position past left parenthesis
@@ -140,10 +138,20 @@ public class Parser {
 	 * @throws SyntaxException
 	 */
 	private NodeStmt parseStmt() throws SyntaxException {
-		NodeAssn assn = parseAssn(); // makes an expression node that conains a lexeme and expression
-		match(";"); // check token for ; and position scanner after
-		NodeStmt stmt = new NodeStmt(assn); // create node statement that contains the assignment
-		return stmt; // returns NodeStmt
+		if (curr().equals(new Token(";"))) {
+			NodeAssn assn = parseAssn(); // makes an expression node that conains a lexeme and expression
+			match(";"); // check token for ; and position scanner after
+			NodeStmt stmt = new NodeStmtAssn(assn); // create node statement that contains the assignment
+			return stmt; // returns NodeStmt
+		}
+		if(curr().equals(new Token("id", "rd")))	{
+			match("id");
+			Token id = curr(); // 'x'// might need to pass by the x too
+			NodeStmt stmt = new NodeStmtRd(id.lex());
+			return stmt;
+		}
+		
+		return null; // testing - delete after
 	}
 	/**
 	 * Creates a new scanner from source program and parses a statement. Checks for EOF then returns statement
