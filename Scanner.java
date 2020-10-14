@@ -82,7 +82,13 @@ public class Scanner {
 		s.add(";"); // add the ; operator to the Set
 	}
 
-	private void initKeywords(Set < String > s) {}
+	private void initKeywords(Set < String > s) {
+		s.add("if");
+		s.add("then");
+		s.add("else");
+		s.add("while");
+		s.add("begin");
+	}
 
 	private void initComments(Set < String > s) {
 		s.add("#");
