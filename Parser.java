@@ -82,7 +82,7 @@ public class Parser {
 			match(")"); // checks current token for ) moves past right parenthesis
 			return new NodeFactExpr(expr); // returns built Node with Expression
 		}
-		if (curr().equals(new Token("id"))) { // checks if current token is an id
+		if (curr().equals(new Token("id"))) { //todo checks if current token is an id - THIS MIGHT NEED TO CHECK FOR STMT READ OR MAYBE IT ALREADY DOES?
 			Token id = curr(); // grabs current token
 			match("id"); // moves scanner past id
 			return new NodeFactId(pos(), id.lex()); // Build node with id and position
