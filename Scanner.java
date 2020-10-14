@@ -80,10 +80,20 @@ public class Scanner {
 		s.add("("); // add the ( operator to the Set
 		s.add(")"); // add the ) operator to the Set
 		s.add(";"); // add the ; operator to the Set
-	}
+		s.add("<"); // add the < relop to the Set
+		s.add("<="); // add the <= relop to the Set
+		s.add(">"); // add the > relop to the Set
+		s.add(">="); // add the >= relop to the Set
+		s.add("<>"); // add the <> relop to the Set
+		s.add("=="); // add the == relop to the Set
 
+	}
+	/**
+	 * This method is responsible for adding keywords to the keywords Set
+	 * @param s This is the Set to add to
+	 */
 	private void initKeywords(Set < String > s) {
-		s.add("if");
+		s.add("if"); 
 		s.add("then");
 		s.add("else");
 		s.add("while");
