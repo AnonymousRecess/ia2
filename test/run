@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# This program is a simple regression tester.  For each test
+#This program is a simple regression tester.  For each test
 # directory, the interpreter is executed on programs in files whose
 # names match "prg*".  Input is from "inp", which is redirected to
 # stdin.  Output goes to "out", to which stdout is redirected.  After
