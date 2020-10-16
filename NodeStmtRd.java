@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class NodeStmtRd extends NodeStmt {
-    private String id;
+    private String id;                                                                                                                 
     private Scanner scan;
     public NodeStmtRd(String id) {
     this.id = id;

@@ -31,6 +31,30 @@ public class Parser {
 	private int pos() {
 		return scanner.pos(); // returns scanners position
 	}
+	private NodeRelop parseRelop() throws SyntaxException {
+		if(curr().equals(new Token("<"))) {
+			match("<");
+			return new NodeRelop(pos(), "<");
+		}
+		if(curr().equals(new Token("<="))) {
+			match("<=");
+			return new NodeRelop(pos(), "<=");
+		}
+		if(curr().equals(new Token(">"))) {
+			match(">");
+			return new NodeRelop(pos(), ">");
+		}
+		if(curr().equals(new Token(">="))) {
+			match(">=");
+			return new NodeRelop(pos(), ">=");
+		}
+		if(curr().equals(new Token("<>"))) {
+			match("<>");
+			return new NodeRelop(pos(), "<>");
+		}
+		match("==");
+		return new NodeRelop(pos(), "==");
+	}
 	/**
 	 * Constructs a Node with multiplication or division based on current token
 	 * @return Node constructed with multiplication and division capabilites and position and operation attributes
@@ -62,6 +86,14 @@ public class Parser {
 			return new NodeAddop(pos(), "-"); // Node constructed with subtraction and position
 		}
 		return null; // null if current token is neither addition or subtraction
+	}
+	private NodeBoolExpr parseBoolExpr() throws SyntaxException {
+		NodeExpr expr = parseExpr();
+		NodeRelop relop = parseRelop();
+		NodeExpr expr2 = parseExpr();
+		NodeBoolExpr bool = new NodeBoolExpr(expr, relop, expr2);
+		return bool;
+		
 	}
 	/**
 	 * Parses the factors of the expression
@@ -138,20 +170,40 @@ public class Parser {
 	 * @throws SyntaxException
 	 */
 	private NodeStmt parseStmt() throws SyntaxException {
-		if (curr().equals(new Token(";"))) {
+		if (curr().equals(new Token("id"))) {
 			NodeAssn assn = parseAssn(); // makes an expression node that conains a lexeme and expression
-			match(";"); // check token for ; and position scanner after
+
 			NodeStmt stmt = new NodeStmtAssn(assn); // create node statement that contains the assignment
 			return stmt; // returns NodeStmt
 		}
-		if(curr().equals(new Token("id", "rd")))	{
-			match("id");
+		if (curr().equals(new Token("rd"))) {
+			match("rd");
 			Token id = curr(); // 'x'// might need to pass by the x too
 			NodeStmt stmt = new NodeStmtRd(id.lex());
 			return stmt;
 		}
-		
+		if (curr().equals((new Token("wr")))) {
+			match("wr");
+			NodeExpr expr = parseExpr();
+			NodeStmt stmt = new NodeWr(expr);
+			return stmt;
+		}
+		if (curr().equals((new Token("if")))) {
+			NodeBoolExpr bool = parseBoolExpr();
+		}
+
 		return null; // testing - delete after
+	}
+	private NodeBlock parseBlock() throws SyntaxException {
+		NodeStmt stmt = parseStmt();
+		if (curr().equals(new Token(";"))) {
+			match(";");
+			NodeBlock block = parseBlock();
+			return new NodeBlock(stmt, block);
+		} else {
+			NodeBlock block = new NodeBlock(stmt, null);
+			return block;
+		}
 	}
 	/**
 	 * Creates a new scanner from source program and parses a statement. Checks for EOF then returns statement
@@ -160,6 +212,7 @@ public class Parser {
 	public Node parse(String program) throws SyntaxException {
 		scanner = new Scanner(program); // scanner for source program
 		scanner.next(); // find next token
+		NodeBlock block = parseBlock();
 		NodeStmt stmt = parseStmt(); // parse the statement at token position
 		match("EOF"); // check if current token is EOF
 		return stmt; // returns statement node
