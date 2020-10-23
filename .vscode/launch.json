@@ -8,13 +8,15 @@
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "mainClass": "${file}"
+            "args": "${command:SpecifyProgramArgs}",
+            "mainClass": "Interpreter",
         },
         {
             "type": "java",
             "name": "Debug (Launch)-Interpreter<ia2_90a9b7f5>",
             "request": "launch",
             "mainClass": "Interpreter",
+            "args": "${command:SpecifyProgramArgs}",
             "projectName": "ia2_90a9b7f5"
         },
         {

@@ -172,13 +172,14 @@ public class Parser {
 	private NodeStmt parseStmt() throws SyntaxException {
 		if (curr().equals(new Token("id"))) {
 			NodeAssn assn = parseAssn(); // makes an expression node that conains a lexeme and expression
-
 			NodeStmt stmt = new NodeStmtAssn(assn); // create node statement that contains the assignment
 			return stmt; // returns NodeStmt
 		}
 		if (curr().equals(new Token("rd"))) {
+			 // 'x'// might need to pass by the x too
 			match("rd");
-			Token id = curr(); // 'x'// might need to pass by the x too
+			Token id = curr();
+			match("id");
 			NodeStmt stmt = new NodeStmtRd(id.lex());
 			return stmt;
 		}
@@ -189,7 +190,13 @@ public class Parser {
 			return stmt;
 		}
 		if (curr().equals((new Token("if")))) {
+			match("if");
 			NodeBoolExpr bool = parseBoolExpr();
+			match("then");
+			NodeStmt stmt = parseStmt();
+			stmt = new NodeStmtIf(bool, stmt);
+			return stmt;
+			
 		}
 
 		return null; // testing - delete after
@@ -213,9 +220,8 @@ public class Parser {
 		scanner = new Scanner(program); // scanner for source program
 		scanner.next(); // find next token
 		NodeBlock block = parseBlock();
-		NodeStmt stmt = parseStmt(); // parse the statement at token position
 		match("EOF"); // check if current token is EOF
-		return stmt; // returns statement node
+		return block; // returns statement node
 	}
 
 }
