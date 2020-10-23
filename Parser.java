@@ -32,23 +32,23 @@ public class Parser {
 		return scanner.pos(); // returns scanners position
 	}
 	private NodeRelop parseRelop() throws SyntaxException {
-		if(curr().equals(new Token("<"))) {
+		if (curr().equals(new Token("<"))) {
 			match("<");
 			return new NodeRelop(pos(), "<");
 		}
-		if(curr().equals(new Token("<="))) {
+		if (curr().equals(new Token("<="))) {
 			match("<=");
 			return new NodeRelop(pos(), "<=");
 		}
-		if(curr().equals(new Token(">"))) {
+		if (curr().equals(new Token(">"))) {
 			match(">");
 			return new NodeRelop(pos(), ">");
 		}
-		if(curr().equals(new Token(">="))) {
+		if (curr().equals(new Token(">="))) {
 			match(">=");
 			return new NodeRelop(pos(), ">=");
 		}
-		if(curr().equals(new Token("<>"))) {
+		if (curr().equals(new Token("<>"))) {
 			match("<>");
 			return new NodeRelop(pos(), "<>");
 		}
@@ -93,7 +93,7 @@ public class Parser {
 		NodeExpr expr2 = parseExpr();
 		NodeBoolExpr bool = new NodeBoolExpr(expr, relop, expr2);
 		return bool;
-		
+
 	}
 	/**
 	 * Parses the factors of the expression
@@ -176,7 +176,7 @@ public class Parser {
 			return stmt; // returns NodeStmt
 		}
 		if (curr().equals(new Token("rd"))) {
-			 // 'x'// might need to pass by the x too
+			// 'x'// might need to pass by the x too
 			match("rd");
 			Token id = curr();
 			match("id");
@@ -193,10 +193,14 @@ public class Parser {
 			match("if");
 			NodeBoolExpr bool = parseBoolExpr();
 			match("then");
+			NodeStmt stmt2 = null;
 			NodeStmt stmt = parseStmt();
-			stmt = new NodeStmtIf(bool, stmt);
+			if (curr().equals(new Token("else"))) {
+				stmt2 = parseStmt();
+			}
+			stmt = new NodeStmtIfElse(bool, stmt, stmt2);
 			return stmt;
-			
+
 		}
 
 		return null; // testing - delete after

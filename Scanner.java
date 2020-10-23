@@ -48,7 +48,7 @@ public class Scanner {
 		fill(s, '0', '9'); // Pass the Set, lo('0'), and hi('9') paramaters for the fill function to add the characters in range to the Set
 		s.add("."); // add double support
 	}
-	
+
 	/**
 	 * This method uses the previously declared fill function to add a range of characters to the letters Set
 	 * @param s This is the first parameter and specifies the Set to add each character to
@@ -93,7 +93,7 @@ public class Scanner {
 	 * @param s This is the Set to add to
 	 */
 	private void initKeywords(Set < String > s) {
-		s.add("if"); 
+		s.add("if");
 		s.add("then");
 		s.add("else");
 		s.add("while");
@@ -108,7 +108,7 @@ public class Scanner {
 	/** 
 	 * This method initializes program, position and token variables and also calls the set initializer functions
 	 *  @param program This is the program sent to the Scanner as args[0]
-	*/
+	 */
 	public Scanner(String program) {
 		this.program = program; // instantiates program variable
 		pos = 0; // initializes position to 0
@@ -143,7 +143,7 @@ public class Scanner {
 	 * @param c character to search program at position for
 	 */
 	private void past(char c) {
-		while (!done() && c != program.charAt(pos)) 
+		while (!done() && c != program.charAt(pos))
 			pos++; // addvance value of position by one until char is found or scanner is at end
 		if (!done() && c == program.charAt(pos))
 			pos++; // advances once more after character is found
@@ -200,19 +200,17 @@ public class Scanner {
 		}
 		String c = program.charAt(pos) + ""; // character at scanner
 		if (digits.contains(c)) // check if character is in digit Set
-			nextNumber();  // create a token with nums identifier 
+			nextNumber(); // create a token with nums identifier 
 		else if (letters.contains(c)) // check if character is in letter Set
 			nextKwId(); // create keyword token
 		else if (operators.contains(c)) // check if c is in operators Set
-			nextOp();  // create a operator token 
-	
-		else if (comments.contains(c))
-			{
-				pos++;
-				past(c.charAt(0));
-				next();
-			}
-		else {
+			nextOp(); // create a operator token 
+
+		else if (comments.contains(c)) {
+			pos++;
+			past(c.charAt(0));
+			next();
+		} else {
 			System.err.println("illegal character at position " + pos); // not a valid token
 			pos++; // increment scanner past invalid character
 			return next(); // check next character
@@ -248,7 +246,7 @@ public class Scanner {
 		return pos; // position of scanner
 	}
 
-	
+
 	/**
 	 * for unit testing - creates a scanner and scans through source program
 	 * @param args is the source program to be scanned
