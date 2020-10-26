@@ -196,6 +196,7 @@ public class Parser {
 			NodeStmt stmt2 = null;
 			NodeStmt stmt = parseStmt();
 			if (curr().equals(new Token("else"))) {
+				match("else");
 				stmt2 = parseStmt();
 			}
 			stmt = new NodeStmtIfElse(bool, stmt, stmt2);
