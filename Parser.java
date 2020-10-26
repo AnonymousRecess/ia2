@@ -203,6 +203,22 @@ public class Parser {
 			return stmt;
 
 		}
+		if (curr().equals(new Token("while"))) {
+			match("while");
+			NodeBoolExpr bool = parseBoolExpr();
+			match("do");
+			NodeStmt stmt = parseStmt();
+			NodeWhile whiles = new NodeWhile(bool, stmt); // todo make node with eval that uses while loop on stmt .eval while boolexpr == 1.0
+			stmt = whiles;
+			return stmt;
+		}
+		if (curr().equals(new Token("begin"))) {
+			match("begin");
+			NodeBlock block = parseBlock();
+			match("end");
+			NodeStmt stmt = new NodeBeginEnd(block);
+			return stmt;
+		}
 
 		return null; // testing - delete after
 	}

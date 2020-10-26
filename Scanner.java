@@ -97,7 +97,9 @@ public class Scanner {
 		s.add("then");
 		s.add("else");
 		s.add("while");
+		s.add("do");
 		s.add("begin");
+		s.add("end");
 		s.add("rd");
 		s.add("wr");
 	}
