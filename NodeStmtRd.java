@@ -1,15 +1,14 @@
 import java.util.Scanner;
 public class NodeStmtRd extends NodeStmt {
-    private String id;                                                                                                                 
-    private Scanner scan;
+    private String id;
+    private static Scanner scan;
     public NodeStmtRd(String id) {
-    this.id = id;
+        this.id = id;
     }
 
-    public double eval(Environment env)
-    {
+    public double eval(Environment env) {
         scan = new Scanner(System.in);
-        return env.put(id,scan.nextDouble()); // maybe?
+        return env.put(id, scan.nextDouble()); // maybe?
 
     }
 }

@@ -1,0 +1,1 @@
+rd x; wr x +5; rd y; wr y+2;
