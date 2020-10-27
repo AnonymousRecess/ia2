@@ -1,1 +1,1 @@
-rd x; wr x +5; rd# Comment# y; wr y;
+rd x; wr#Hello# x +5;

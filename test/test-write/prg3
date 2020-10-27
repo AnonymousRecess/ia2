@@ -1,1 +1,1 @@
-x = 15; y = 3; wr x; wr y;
+x = 15; y = 3; z = x - y; wr z;

@@ -1,0 +1,1 @@
+x = 1; if 1 < 2 then x = 5; wr x;

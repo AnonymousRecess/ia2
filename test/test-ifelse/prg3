@@ -1,0 +1,1 @@
+x = 1; if 3 > 2 then x = 4 else x = 6; wr x;

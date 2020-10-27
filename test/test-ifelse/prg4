@@ -1,0 +1,1 @@
+y = 6; rd x; if x > 4 then y = 5 else y = 2; wr y;
