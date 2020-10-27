@@ -1,31 +1,24 @@
-# Language Assignment 2
+# Interpreter Assignment 2
 
 Jeff Kahn
-October 7 2020
-La2
+October 27 2020
+IA2
 
 
 
 # Java Interpreter
 
-In this assignment, we were tasked with commenting code given by our professor. This function interprets statements by creating a scanner and parser.
-The Scanner contains Sets of collections for forming the tokens. These tokens consist of lexemes and ids that when combined with the grammar are evaluated by the environment to
-perform operations and assignments and print the evaluation to stdout.
+In this assignment, we were tasked with extending the scanner and parser of the first interpreter assignment to allow the specified grammar functionality provided by our professor. This newly introduced functionality includes if-then-else, while do, blocks, begin-end and read/write. The test cases needed to also be modified to utilize write for the output as well as test the newly introduced functions. This led to a total of 26 implementation tests. 
 
-## Examples of functionality
+## Running the Tester
 
+To run the tests for the interpreter:
+- naviagate to inside the test folder
+- run the following bash command $ ./run
 
-## Input
+## Running the Interpreter
 
-("x = 2 -1;")
-("x = -2 + 1;")
-("x =# Hello# -2 +1;")
-("x = 1.0 + 2.0;")
-("x = 1.0;" "y = x+ 2.2;")
-## Output
-1.0
--1.0
--1.0
-3
-1
-3.2
+To run the interpreter with a user supplied program:
+- navigate to inside the ia2 folder
+- run the following bash command $javac*.java
+- run the following bash command $java Interpreter <program> (with <program> substituted with the user's program to parse)
