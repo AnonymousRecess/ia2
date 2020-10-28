@@ -112,7 +112,6 @@ public class Parser {
 	 */
 	private NodeFact parseFact() throws SyntaxException {
 		if (curr().equals(new Token("-"))) { // unary minus check
-			// 
 			match("-");
 			NodeFact facts = parseFact();
 			return new NodeUnaryMin(facts);
@@ -124,7 +123,7 @@ public class Parser {
 			match(")"); // checks current token for ) moves past right parenthesis
 			return new NodeFactExpr(expr); // returns built Node with Expression
 		}
-		if (curr().equals(new Token("id"))) { //todo checks if current token is an id - THIS MIGHT NEED TO CHECK FOR STMT READ OR MAYBE IT ALREADY DOES?
+		if (curr().equals(new Token("id"))) {
 			Token id = curr(); // grabs current token
 			match("id"); // moves scanner past id
 			return new NodeFactId(pos(), id.lex()); // Build node with id and position
@@ -192,17 +191,17 @@ public class Parser {
 			NodeStmt stmt = new NodeStmtRd(id.lex()); // construct stmt with a new instance of NodeStmtRd
 			return stmt;
 		}
-		if (curr().equals((new Token("wr")))) {		// check for wr at scanner
+		if (curr().equals((new Token("wr")))) { // check for wr at scanner
 			match("wr");
-			NodeExpr expr = parseExpr();	// parse expression to write
-			NodeStmt stmt = new NodeWr(expr);	// construct write node
+			NodeExpr expr = parseExpr(); // parse expression to write
+			NodeStmt stmt = new NodeWr(expr); // construct write node
 			return stmt;
 		}
-		if (curr().equals((new Token("if")))) {		// check scanner for if
+		if (curr().equals((new Token("if")))) { // check scanner for if
 			match("if");
 			NodeBoolExpr bool = parseBoolExpr();
 			match("then");
-			NodeStmt stmt2 = null;		// wont have second stmt if no else
+			NodeStmt stmt2 = null; // wont have second stmt if no else
 			NodeStmt stmt = parseStmt();
 			if (curr().equals(new Token("else"))) {
 				match("else");
@@ -212,7 +211,7 @@ public class Parser {
 			return stmt;
 
 		}
-		if (curr().equals(new Token("while"))) {	// check scanner for while
+		if (curr().equals(new Token("while"))) { // check scanner for while
 			match("while");
 			NodeBoolExpr bool = parseBoolExpr();
 			match("do");
@@ -232,8 +231,8 @@ public class Parser {
 		return null; // testing - delete after
 	}
 	private NodeBlock parseBlock() throws SyntaxException {
-		NodeStmt stmt = parseStmt();	// always a stmt
-		if (curr().equals(new Token(";"))) {	// only a following block if a ; after stmt
+		NodeStmt stmt = parseStmt(); // always a stmt
+		if (curr().equals(new Token(";"))) { // only a following block if a ; after stmt
 			match(";");
 			NodeBlock block = parseBlock();
 			return new NodeBlock(stmt, block);
