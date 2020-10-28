@@ -1,1 +1,1 @@
-rd x; wr x +5; 
+rd x; wr x+5;
