@@ -1,4 +1,4 @@
-public class NodeStmtId extends NodeStmt { //todo used by write to get stored node? This is the way to 'remember' a stored value? Or do I need it retrieved by factID IF SO MIGHT NOT NEED THIS?
+public class NodeStmtId extends NodeStmt { 
 
     private String id;
 

@@ -6,6 +6,6 @@ public class NodeBeginEnd extends NodeStmt {
         this.block = block;
     }
     public double eval(Environment env) throws EvalException {
-        return block.eval(env);
+        return block.eval(env); // evaluate block
     }
 }

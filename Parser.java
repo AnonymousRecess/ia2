@@ -31,6 +31,11 @@ public class Parser {
 	private int pos() {
 		return scanner.pos(); // returns scanners position
 	}
+	/**
+	 * Method to construct Node for scanned relop
+	 * @return RelopNode used for comparisons
+	 * @throws SyntaxException
+	 */
 	private NodeRelop parseRelop() throws SyntaxException {
 		if (curr().equals(new Token("<"))) {
 			match("<");
@@ -87,6 +92,11 @@ public class Parser {
 		}
 		return null; // null if current token is neither addition or subtraction
 	}
+	/**
+	 * Constructs node with evaluation that determines true or false
+	 * @return NodeBoolExpr that contains the expression that evaluates to true or false
+	 * @throws SyntaxException
+	 */
 	private NodeBoolExpr parseBoolExpr() throws SyntaxException {
 		NodeExpr expr = parseExpr();
 		NodeRelop relop = parseRelop();
@@ -175,25 +185,24 @@ public class Parser {
 			NodeStmt stmt = new NodeStmtAssn(assn); // create node statement that contains the assignment
 			return stmt; // returns NodeStmt
 		}
-		if (curr().equals(new Token("rd"))) {
-			// 'x'// might need to pass by the x too
-			match("rd");
-			Token id = curr();
+		if (curr().equals(new Token("rd"))) { // check for rd at scanner
+			match("rd"); // progress scanner past rd
+			Token id = curr(); // construct token based on id
 			match("id");
-			NodeStmt stmt = new NodeStmtRd(id.lex());
+			NodeStmt stmt = new NodeStmtRd(id.lex()); // construct stmt with a new instance of NodeStmtRd
 			return stmt;
 		}
-		if (curr().equals((new Token("wr")))) {
+		if (curr().equals((new Token("wr")))) {		// check for wr at scanner
 			match("wr");
-			NodeExpr expr = parseExpr();
-			NodeStmt stmt = new NodeWr(expr);
+			NodeExpr expr = parseExpr();	// parse expression to write
+			NodeStmt stmt = new NodeWr(expr);	// construct write node
 			return stmt;
 		}
-		if (curr().equals((new Token("if")))) {
+		if (curr().equals((new Token("if")))) {		// check scanner for if
 			match("if");
 			NodeBoolExpr bool = parseBoolExpr();
 			match("then");
-			NodeStmt stmt2 = null;
+			NodeStmt stmt2 = null;		// wont have second stmt if no else
 			NodeStmt stmt = parseStmt();
 			if (curr().equals(new Token("else"))) {
 				match("else");
@@ -203,12 +212,12 @@ public class Parser {
 			return stmt;
 
 		}
-		if (curr().equals(new Token("while"))) {
+		if (curr().equals(new Token("while"))) {	// check scanner for while
 			match("while");
 			NodeBoolExpr bool = parseBoolExpr();
 			match("do");
 			NodeStmt stmt = parseStmt();
-			NodeWhile whiles = new NodeWhile(bool, stmt); // todo make node with eval that uses while loop on stmt .eval while boolexpr == 1.0
+			NodeWhile whiles = new NodeWhile(bool, stmt); // construct whilenode with boolexpr and stmt
 			stmt = whiles;
 			return stmt;
 		}
@@ -223,8 +232,8 @@ public class Parser {
 		return null; // testing - delete after
 	}
 	private NodeBlock parseBlock() throws SyntaxException {
-		NodeStmt stmt = parseStmt();
-		if (curr().equals(new Token(";"))) {
+		NodeStmt stmt = parseStmt();	// always a stmt
+		if (curr().equals(new Token(";"))) {	// only a following block if a ; after stmt
 			match(";");
 			NodeBlock block = parseBlock();
 			return new NodeBlock(stmt, block);

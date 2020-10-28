@@ -11,8 +11,8 @@ public class NodeBlock extends Node {
     
     public double eval(Environment env) throws EvalException {
         double evaluation = stmt.eval(env);
-        if(block.block!= null)
+        if(block.block!= null) // evaluate block if there is another block
         return block.eval(env) ;
-        return evaluation;
+        return evaluation; // evaluate stmt if no block
     }
 }
